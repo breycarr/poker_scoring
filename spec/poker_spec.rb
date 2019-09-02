@@ -21,13 +21,13 @@ end
 
 describe PokerHand do
     # describe "#compare_with" do
-        # it "shows a higher pair wins" do
-        #     hand = PokerHand.new("TD 9S QS AH TH")
-        #     p hand
-        #     opponent = PokerHand.new("5D 5S QC 9H AD")
+    #     it "shows a higher pair wins" do
+    #         hand = PokerHand.new("TD 9S QS AH TH")
+    #         p hand
+    #         opponent = PokerHand.new("5D 5S QC 9H AD")
             
-        #     expect(hand.compare_with(opponent)).to eq(1)
-        # end
+    #         expect(hand.compare_with(opponent)).to eq(1)
+    #     end
     # end 
 
     describe "#pair?" do
@@ -87,6 +87,13 @@ describe PokerHand do
         it "identifies a straight flush" do
             subject = PokerHand.new("1D 2D 3D 4D 5D")
             expect(subject.straight_flush?).to eq(true)
+        end
+    end
+
+    describe "#royal_flush" do
+        it "identifies a royal flush" do
+            subject = PokerHand.new("JD TD QD KD AD")
+            expect(subject.royal_flush?).to eq(true)
         end
     end
 
