@@ -15,24 +15,43 @@ class PokerHand
 
   def initialize(cards)
     @cards = cards.split(" ").map{ |card| Card.new(card) }
-  end
+    @ranks = @cards.map { |card| card.rank }
+    @suits = @cards.map { |card| card.suit }
 
-  def pair?
-    ranks = @cards.map { |card| card.rank }
-    !ranks.select{ |x| ranks.count(x) == 2 }.empty? ? true : false
-  end
-
-  def three_kind?
-    ranks = @cards.map { |card| card.rank }
-    !ranks.select{ |x| ranks.count(x) == 3 }.empty? ? true : false
-  end
-
-  def four_kind?
-    ranks = @cards.map { |card| card.rank }
-    !ranks.select{ |x| ranks.count(x) == 4 }.empty? ? true : false
   end
 
   def compare_with(hand)
-   return 0
+    return 0
+   end
+
+  # royal flush
+  
+  # straight flush
+
+  def four_kind?
+    !@ranks.select{ |x| @ranks.count(x) == 4 }.empty? ? true : false
   end
+
+  def full_house?
+    self.pair? && self.three_kind? ? true : false
+  end
+
+  def flush?
+    !@suits.select{ |x| @suits.count(x) == 5 }.empty? ? true : false
+  end
+
+  # straight
+
+  def three_kind?
+    !@ranks.select{ |x| @ranks.count(x) == 3 }.empty? ? true : false
+  end
+
+  def two_pair?
+    @ranks.select{ |x| @ranks.count(x) == 2 }.length == 4 ? true : false
+  end 
+
+  def pair?
+    !@ranks.select{ |x| @ranks.count(x) == 2 }.empty? ? true : false
+  end
+
 end
