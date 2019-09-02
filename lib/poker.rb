@@ -23,26 +23,46 @@ class PokerHand
 
   def initialize(cards)
     @cards = cards.split(" ").map{ |card| Card.new(card) }
-    @ranks = @cards.map { |card| card.rank }
+    @values = @cards.map{ |card| card.value }
     @suits = @cards.map { |card| card.suit }
   end
 
-  def compare_with(hand)
-    return 0
+  def compare_with(opponent)
+    player_hand = self.score_hand
+    opponent_hand = opponent.score_hand
+    if player_hand > opponent_hand
+      1
+    elsif player_hand < opponent_hand
+      2
+    elsif player_hand == opponent_hand
+      if tie_break(opponent) != 0
+        tie_break(opponent)
+      else 
+        high_card(opponent)
+      end
+    end
   end
 
-  private 
-  
-  def royal_flush?
-    self.straight_flush? && @ranks.all?{ /TJQKA/ }
-  end
+  def score_hand
+    case 
+    when self.straight_flush? then 8
+    when self.four_kind? then 7
+    when self.full_house? then 6
+    when self.flush? then 5
+    when self.straight? then 4
+    when self.three_kind? then 3
+    when self.two_pair? then 2
+    when self.pair? then 1
+    else 0
+    end
+  end 
   
   def straight_flush?
     self.straight? && self.flush?
   end
 
   def four_kind?
-    !@ranks.select{ |x| @ranks.count(x) == 4 }.empty?
+    !@values.select{ |x| @values.count(x) == 4 }.empty?
   end
 
   def full_house?
@@ -54,22 +74,43 @@ class PokerHand
   end
 
   def straight?
-    values = @cards.map{ |x| x.value }
-    values.sort.each_cons(2).all? { |x,y| y == x + 1 } 
+    @values.sort.each_cons(2).all? { |x,y| y == x + 1 } 
   end
 
   def three_kind?
-    !@ranks.select{ |x| @ranks.count(x) == 3 }.empty? 
+    !@values.select{ |x| @values.count(x) == 3 }.empty? 
   end
 
   def two_pair?
-    @ranks.select{ |x| @ranks.count(x) == 2 }.length == 4 
+    @values.select{ |x| @values.count(x) == 2 }.length == 4 
   end 
 
   def pair?
-    !@ranks.select{ |x| @ranks.count(x) == 2 }.empty? 
+    !@values.select{ |x| @values.count(x) == 2 }.empty? 
   end
 
-  # high_card
+  def high_card(opponent)
+    player_card = @cards.sort { |a, b| a.value <=> b.value }.pop
+    opponent_card = opponent.cards.sort { |a, b| a.value <=> b.value }.pop
+    
+    give_points(player_card.value, opponent_card.value)
+  end
 
+  def tie_break(opponent)
+    player_hand = @values.select{ |x| @values.count(x) == 2 }.pop
+    vs = opponent.cards.map { |card| card.value }
+    opponent_hand = vs.select{ |x| vs.count(x) == 2 }.pop 
+    
+    give_points(player_hand, opponent_hand)
+  end
+
+  private
+
+  def give_points(player, opponent)
+    case
+    when player > opponent then 1
+    when player < opponent then 2
+    else 0
+    end
+  end
 end
