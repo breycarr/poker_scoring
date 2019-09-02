@@ -18,13 +18,13 @@ class PokerHand
   end
 
   def pair?
-    values = @cards.map { |card| card.value }.sort
-    # Count how many of the same value exist
-    if !values.select{ |x| values.count(x) > 1}.empty?
-      true
-    else
-      false
-    end
+    values = @cards.map { |card| card.value }
+    !values.select{ |x| values.count(x) == 2 }.empty? ? true : false
+  end
+
+  def three_kind?
+    values = @cards.map { |card| card.value }
+    !values.select{ |x| values.count(x) == 3 }.empty? ? true : false
   end
 
   def compare_with(hand)

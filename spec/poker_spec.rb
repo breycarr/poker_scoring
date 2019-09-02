@@ -29,4 +29,12 @@ describe PokerHand do
             expect(subject.pair?).to eq(true)
         end
     end
+
+    describe "#pair?" do
+        let(:subject) {PokerHand.new("TD TS QS AH TH")}
+
+        it "identifies a three of a kind" do
+            expect(subject.three_kind?).to eq(true)
+        end
+    end
 end
