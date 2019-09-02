@@ -1,9 +1,9 @@
 class Card
 
-  attr_reader :value, :suit
+  attr_reader :rank, :suit
 
   def initialize(name)
-    @value = name.split("")[0]
+    @rank = name.split("")[0]
     @suit = name.split("")[1]
   end
 
@@ -18,13 +18,18 @@ class PokerHand
   end
 
   def pair?
-    values = @cards.map { |card| card.value }
-    !values.select{ |x| values.count(x) == 2 }.empty? ? true : false
+    ranks = @cards.map { |card| card.rank }
+    !ranks.select{ |x| ranks.count(x) == 2 }.empty? ? true : false
   end
 
   def three_kind?
-    values = @cards.map { |card| card.value }
-    !values.select{ |x| values.count(x) == 3 }.empty? ? true : false
+    ranks = @cards.map { |card| card.rank }
+    !ranks.select{ |x| ranks.count(x) == 3 }.empty? ? true : false
+  end
+
+  def four_kind?
+    ranks = @cards.map { |card| card.rank }
+    !ranks.select{ |x| ranks.count(x) == 4 }.empty? ? true : false
   end
 
   def compare_with(hand)

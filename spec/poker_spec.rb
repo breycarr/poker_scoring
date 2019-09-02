@@ -2,8 +2,8 @@ require 'poker'
 
 describe Card do
     let(:subject) {Card.new("2S")}
-    it "has a value" do
-        expect(subject.value).to eq("2")
+    it "has a rank" do
+        expect(subject.rank).to eq("2")
     end
     it "has a suit" do
         expect(subject.suit).to eq("S")
@@ -30,11 +30,19 @@ describe PokerHand do
         end
     end
 
-    describe "#pair?" do
+    describe "#three_kind?" do
         let(:subject) {PokerHand.new("TD TS QS AH TH")}
 
         it "identifies a three of a kind" do
             expect(subject.three_kind?).to eq(true)
+        end
+    end
+
+    describe "#four_kind?" do
+        let(:subject) {PokerHand.new("TD TS TC AH TH")}
+
+        it "identifies a four of a kind" do
+            expect(subject.four_kind?).to eq(true)
         end
     end
 end
