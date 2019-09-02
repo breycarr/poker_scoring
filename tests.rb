@@ -1,4 +1,4 @@
-require_relative "poker"
+require_relative "lib/poker"
 require "test/unit"
 
 class TestCase < Test::Unit::TestCase
