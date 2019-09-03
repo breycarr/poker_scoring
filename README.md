@@ -1,25 +1,7 @@
-# Grabyo technical test
+# Poker Hand Comparison technical test
+> Since no one remembers the card ranking you will have to write a program that compares poker hands and determines a winner.
 
-At Grabyo we love board games and will have an occasional poker night.
-Since no one remembers the card ranking you will have to write a program that
-compare poker hands and determines a winner.
-
-## 1. Requirements
-
-A poker hand has a constructor that accepts a string containing 5 cards: 
-
-```ruby
-hand = PokerHand.new("KS 2H 5C JD TD")
-```
-
-and a method to compare itself to another hand
-
-```ruby
-def compare_with(hand)
-  # Your code here
-  return 0
-end
-```
+## Requirements
 
 The characteristics of the string of cards are:
 *   A space is used as card seperator
@@ -36,9 +18,26 @@ The ranking of the hands should follow the [Texas Hold'em rules](http://freepoke
 
 You are free to architect your code the way you want: adding classes, enums or constants as long as you stick to the `compare_with` method signature and `PokerHand` specification given in the sample. You can use any libraries that you feel are relevant to solve this problem.
 
-## 2. Tests
+## Installation
 
-Sample unit tests have been included in the code skeleton. You can run them as a script: `ruby tests.rb`. Writing more tests is welcome :)
+Clone this repository and navigate to the relevant folder
 
+Run the following command to start:
 
-Good luck ;)
+```
+$ irb -r ./lib/poker.rb  
+```
+
+## Usage
+
+A poker hand has a constructor that accepts a string containing 5 cards: 
+
+```ruby
+hand = PokerHand.new("KS 2H 5C JD TD")
+```
+and a method to compare itself to another hand
+```ruby
+hand.compare_with(opponent)
+```
+
+This will output a score, as stated above, based on which hand is better. If both players have the same kind of hand, the method will then see who has the higher version of that hand. For example the high pair in a pair hand. If the same high pair is present, the winner will be determined by the high card, if the high card is the same, there will be a draw.
